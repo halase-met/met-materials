@@ -1,0 +1,61 @@
+\documentclass[a4paper,11pt,platex]{jsarticle}
+
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{url}
+\usepackage{enumerate}
+
+
+\hypersetup{
+    setpagesize=false,
+    bookmarksnumbered=true,%
+    bookmarksopen=true,%
+    colorlinks=true,%
+    linkcolor=blue,
+    citecolor=black,
+    urlcolor=blue,
+}
+
+
+\numberwithin{equation}{section}
+
+\setcounter{tocdepth}{3}
+
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table }
+
+\renewcommand{\equationautorefname}{Eq.}
+\renewcommand{\figureautorefname}{Fig.}
+\renewcommand{\tableautorefname}{Table}
+\renewcommand{\sectionautorefname}{\S}
+\renewcommand{\subsectionautorefname}{\S}
+\renewcommand{\subsubsectionautorefname}{\S}
+
+\newcommand{\lat}[2]{$#1^\circ\mathrm{#2}$}
+
+\makeatletter
+\newcommand*{\themonth}{\two@digits\month}
+\newcommand*{\theday}{\two@digits\day}
+\makeatother
+\renewcommand{\today}{{\the\year}/{\themonth}/{\theday}}
+
+
+\title{気象学・大気力学ノート}
+\date{最終更新 \today}
+
+
+\begin{document}
+\pagenumbering{roman}
+\maketitle
+
+\clearpage
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+
+
+\end{document}
+
