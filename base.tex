@@ -60,13 +60,7 @@
 \pagenumbering{arabic}
 
 
-% \section{はじめに}
-% この資料では、気象学を知るための基礎として力学と熱力学について考える。
-% 古典力学的には、質量を持った物体は運動方程式に従って運動をすることが知られている。
-% 大気を含む流体も質量を持っているから、その運動も同様に運動方程式に従う。
-% 流体の運動方程式としてはオイラーの運動方程式のほか\nse がよく知られているが、地球流体の文脈ではオイラーの運動方程式のほうがメジャーである。
-
-\section{力学}
+\section{一般}
 
 
 \subsection{状態方程式}
@@ -90,6 +84,68 @@
 以上のように、気象学では、気体定数に$R=R^*/M \sim 287 \: \mathrm{J \: K^{-1} \: kg^{-1}}$を用いて状態方程式を記述する。
 
 
+\subsection{フラックス}
+任意の保存量$A$のフラックスは、「単位時間あたりに単位面積を通過する$A$の量」として定義される。
+例えば、放射フラックスと言えば単位時間で単位面積を通過する電磁波の大きさだし、エネルギーフラックスは通過するエネルギーの大きさである。
+フラックスは、さまざまな物理量に対して定義される重要な概念である。
+ここでは任意の$A$に対してフラックスを定義し、それを元に流体の質量フラックスについて考える。
+ここで$A$は保存量とするが、フラックスの概念自体は保存量に限らず定義できることに注意されたい。
+
+まず、\autoref{flux_any_diagram}左のように面積$dydz$の面を$x$方向に通過する場合を考える。
+微小時間$dt$が経過する間に、通過した$A$は$dx$だけ$x$方向に進行する。
+このとき、この面を$dt$の間に通過する量は$Adxdydz$となる。
+これを単位時間、単位面積の値に直すと、$x$方向のフラックス$F_x$は次のように表現できる
+\begin{equation}
+    F_x = A{dx \over dt} = Au
+\end{equation}
+$y$, $z$方向も考えれば、全ての方向を考慮したフラックス$\vb*{F}$は
+\begin{equation}
+    \vb*{F} = A\vb*{v}
+\end{equation}
+
+次に、\autoref{flux_any_diagram}右のように直方体を保存量が通過するとき、その座標での$A$の時間発展について考える。
+座標$x$と$x+dx$での収支を考えると、$x$方向のフラックスによってこの座標に滞留する$A$の大きさ$NF_x$は
+\begin{equation}
+    NF_x = \left. Au \right|_{x} - \left. Au \right|_{x+dx} = -dx\spartial{}{x}Au
+\end{equation}
+単位長さあたりに直し、全ての方向を考慮することで、正味のフラックスは次のように表される
+\begin{equation}
+    NF = -\nabla \cdot A\vb*{v}
+\end{equation}
+すなわち、$NF$で表される量がこの座標に滞留することになる。
+言い換えると、この座標における$A$の時間変化は、$A$は保存量だから$NF$に等しい。
+よって、次の関係が成り立つ
+\begin{equation}
+    \label{net_flux_timedif_relation}
+    \spartial{A}{t} = -\nabla \cdot A\vb*{v}
+\end{equation}
+これは、次のように書き換えることもできる
+\begin{equation}
+    {dA \over dt} + A\nabla \cdot \vb*{v} = 0
+\end{equation}
+
+\autoref{net_flux_timedif_relation}の$A$に密度を代入すると、質量保存則を考えることになり流体の連続の式がもとまる
+\begin{equation}
+    \spartial{\rho}{t} + \nabla \cdot \rho \vb*{v} = 0
+\end{equation}
+もし流体の圧縮性が小さく、密度変化を無視できるのであれば、$\rho=const.$として次が成り立つ
+\begin{equation}
+    \nabla \cdot \vb*{v} = 0
+\end{equation}
+これは良い近似として、理論の研究や数値シミュレーションに便利使いできる。
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.5]{figs/flux_any_diagram.png}
+    \caption{$x$方向に空間を通過する$A$のイメージ}
+    \label{flux_any_diagram}
+\end{figure}
+
+
+\section{力学}
+
+
 \subsection{静水圧平衡}
 静水圧平衡は、鉛直方向の気圧と重力の釣り合いを表す関係である。
 \autoref{hydrostatic_diagram}のように微小格子を考え、重力と2格子間の気圧差 (気圧傾度力) が釣り合うとする。
@@ -109,7 +165,7 @@
 この式からわかる重要なことのひとつは、気圧は必ず高度が上がるごとに小さくなるということである。
 つまり、気圧は単調減少し、逆転は起こらない。
 この性質から、鉛直座標に気圧を用いた考察や計算がよく行われる。
-\begin{figure}
+\begin{figure}[t]
     \centering
     \includegraphics[scale=0.5]{figs/hydrostatic_diagram.png}
     \caption{静水圧平衡の模式図}
@@ -140,7 +196,7 @@
 以上をまとめると、流体の運動方程式はデカルト座標系で次のように表される
 \begin{equation}
     \label{lagrange_eom}
-    {d\vb*{v} \over dt} = -{1 \over \rho} \nabla p - \vb*{f} \times \vb*{v} - \nabla \Phi + \vb*{X}
+    {d\vb*{v} \over dt} = -{1 \over \rho} \nabla p - \vb*{f} \cross \vb*{v} - \nabla \Phi + \vb*{X}
 \end{equation}
 ここで、$\vb*{v}$は風速、$p$は気圧、$\vb*{f}=2\vb*{\Omega}\sin{\phi}$はコリオリパラメータ、$\vb*{\Omega}$は地球の自転角速度ベクトル、$\phi$は緯度、$\Phi$はジオポテンシャル、$\vb*{X}$は摩擦力である。
 ジオポテンシャル$\Phi$は重力ポテンシャルを表し、より正確には
@@ -173,7 +229,7 @@
 これを使うと、オイラー法の運動方程式は
 \begin{equation}
     \label{euler_eom}
-    \spartial{\vb*{v}}{t} = -\left(\vb*{v} \cdot \nabla\right)\vb*{v} -{1 \over \rho} \nabla p - \vb*{f} \times \vb*{v} - \nabla \Phi + \vb*{X}
+    \spartial{\vb*{v}}{t} = -\left(\vb*{v} \cdot \nabla\right)\vb*{v} -{1 \over \rho} \nabla p - \vb*{f} \cross \vb*{v} - \nabla \Phi + \vb*{X}
 \end{equation}
 気象学では、よくこの表現を用いる。
 
@@ -188,6 +244,7 @@
 \end{equation}
 両辺を高度一定条件で$dx$で割ることで
 \begin{equation}
+    \label{A_z_p_conversion}
     \left(\spartial{A}{x}\right)_z = \left(\spartial{A}{x}\right)_p + \left(\spartial{A}{p}\right)_x \left(\spartial{p}{x}\right)_z
 \end{equation}
 よって、$A$に気圧$z$を代入することで、次が得られる
@@ -198,10 +255,17 @@
 \begin{equation}
     \left(\spartial{p}{x}\right)_z = \rho g \left(\spartial{z}{x}\right)_p = \rho \left(\spartial{\Phi}{x}\right)_p
 \end{equation}
+よって、気圧傾度力は
+\begin{equation}
+    -{1 \over \rho}\left(\spartial{p}{x}\right)_z = -\left(\spartial{\Phi}{x}\right)_p
+\end{equation}
 この式を\autoref{euler_eom}に代入すれば、圧力座標での運動方程式が得られる
 \begin{equation}
-    \spartial{\vb*{v}}{t} = -u\spartial{\vb*{v}}{x} - v\spartial{\vb*{v}}{x} - \omega\spartial{\vb*{v}}{p} - \left(\spartial{\Phi}{x}\right)_p - \vb*{f} \cross \vb*{v}
+    \left(\spartial{\vb*{v}}{t}\right)_p = -u\left(\spartial{\vb*{v}}{x}\right)_p - v\left(\spartial{\vb*{v}}{x}\right)_p - \omega\spartial{\vb*{v}}{p} - \left(\spartial{\Phi}{x}\right)_p - \vb*{f} \cross \vb*{v}
 \end{equation}
+
+
+
 
 
 
