@@ -46,7 +46,7 @@
 \renewcommand{\today}{{\the\year}/{\themonth}/{\theday}}
 
 
-\title{気象学・大気力学ノート}
+\title{気象学・大気力学ノート\\基礎知識編}
 \date{最終更新 \today}
 
 
@@ -265,8 +265,42 @@ $y$, $z$方向も考えれば、全ての方向を考慮したフラックス$\v
 \end{equation}
 
 
+\section{熱力学}
 
 
+\subsection{温位}
+高校物理で学ぶ熱力学第一法則から、非断熱加熱$Q$と内部エネルギー$U=c_vT$、仕事$pdV$の関係は次のように表される
+\begin{equation}
+    dQ = dU + p dV
+\end{equation}
+両辺を質量で割り、単位質量あたりの変化について考えると
+\begin{equation}
+    \label{thermal_first_law}
+    dq = du + pd\alpha
+\end{equation}
+ただし$\alpha=1/\rho$。
+
+大気のパーセルは、その運動を追跡すると非常によく断熱的に振る舞うことが知られている。
+言い換えると、大気の熱拡散は移流に比べてあまり大きくなく、パーセル間の温度の交換はあまり大きくない。
+このため、パーセルの運動について考えるとき、断熱を仮定することは有用である。
+ここでは、\autoref{thermal_first_law}について断熱を仮定する。
+単位質量あたりの定積比熱を$c_v$とおき、断熱仮定$dq=0$を考えると
+\begin{equation}
+    c_v dT = -pd\alpha = -d\left(p\alpha\right) + \alpha dp = -RdT + {dp \over \rho} = -RdT + {RT \over p}dp
+\end{equation}
+ただし、途中で\autoref{equation_of_state}を用いた。
+単位質量あたりの定圧比熱$c_p$について$c_p=c_v+R$が成り立つから、この式は次のように書き換えられる
+\begin{equation}
+    {c_p \over R} {dT \over T} = {dp \over p}
+\end{equation}
+両辺の積分により、次のように温位と呼ばれる物理量$\theta$が定義される
+\begin{equation}
+    \theta = T \left({p_0 \over p}\right)^{R/c_p}
+\end{equation}
+ただし、$p_0$は地表気圧で、一般的に$p_0=1000 \: \mathrm{hPa}$が用いられる。
+温位は、その導出過程からわかるように、パーセルを断熱的に地表へ移動させたときの温度を表す。
+すなわち、高度間の気圧差による断熱圧縮/断熱膨張を考慮した潜在的な温度を意味し、鉛直方向の運動が重要となる現象では非常に重要となる物理量である。
+また、大気の運動は、良く断熱的に振る舞うことからわかるように等温位面上を移動する。
 
 
 
